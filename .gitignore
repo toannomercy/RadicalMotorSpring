@@ -3,6 +3,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
+### Ignore Keys ###
+/src/main/resources/static/json/serviceAccountKey.json
+
 ### STS ###
 .apt_generated
 .classpath
