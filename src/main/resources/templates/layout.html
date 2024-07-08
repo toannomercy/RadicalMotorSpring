@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-      lang="en">
+<html xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -53,19 +52,20 @@
                 <div class="nav-item dropdown">
                     <a href="/services" class="nav-item nav-link">Services</a>
                 </div>
-                <sec:authorize access="isAuthenticated()">
+                <form th:action="@{/logout}" method="post">
                     <a class="btn btn-primary py-4 px-lg-5 d-lg-block" id="logout-btn-gradient"
+                       style="display: none !important"
+                       sec:authorize="isAuthenticated()"
                        th:href="@{/auth/logout}">
                         <i class="fa fa-sign-out-alt"></i> Logout
                     </a>
-                </sec:authorize>
-                <sec:authorize access="!isAuthenticated()">
+                </form>
                     <a class="btn btn-primary py-4 px-lg-5 d-lg-block" id="signin-btn-gradient"
                        style="display: block !important"
+                       sec:authorize="!isAuthenticated()"
                        th:href="@{/auth/login}">
                         <i class="fa fa-sign-in-alt"></i> Login Now
                     </a>
-                </sec:authorize>
             </div>
         </div>
     </nav>
@@ -172,6 +172,25 @@
     <script th:src="@{/js/login-register.js}" defer></script>
     <script th:src="@{/js/jquery.fancybox.min.js}"></script>
     <script th:src="@{/js/aos.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const authStatusElement = document.getElementById('auth-status');
+            if (!authStatusElement) {
+                console.error('Auth status element not found');
+                return;
+            }
+
+            const isAuthenticated = authStatusElement.getAttribute('data-authenticated') === 'true';
+
+            if (isAuthenticated) {
+                document.getElementById('signin-btn-gradient').style.display = 'none';
+                document.getElementById('logout-btn-gradient').style.display = 'block';
+            } else {
+                document.getElementById('signin-btn-gradient').style.display = 'block';
+                document.getElementById('logout-btn-gradient').style.display = 'none';
+            }
+        });
+    </script>
 </div>
 </body>
 </html>

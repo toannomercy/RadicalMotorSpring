@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**","/scss/**","/Theme/**","/img/**","/images/profiles/**","/jquery/**","/lib/**", "/oauth2/**", "/auth/register", "/auth/login", "/error").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority(String.valueOf(RoleType.ADMIN))
 //                        .requestMatchers("/vehicles/edit/**", "/vehicles/delete", "/vehicles/add", "/vehicle-type/add", "/vehicle-type", "/vehicle-type/edit", "/vehicle-type/delete").hasAnyAuthority(String.valueOf(RoleType.ADMIN)))
-                        .requestMatchers("/vehicles", "/vehicles/detail").hasAnyAuthority(String.valueOf(RoleType.USER), String.valueOf(RoleType.ADMIN))
+                        .requestMatchers("/products", "/products/detail").hasAnyAuthority(String.valueOf(RoleType.USER), String.valueOf(RoleType.ADMIN))
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/api/**").hasAnyAuthority(String.valueOf(RoleType.USER), String.valueOf(RoleType.ADMIN))
                         .anyRequest().authenticated())
