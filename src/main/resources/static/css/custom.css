@@ -134,7 +134,6 @@ body.login-page {
         z-index: 5;
     }
 }
-
 .login-page .overlay-container {
     position: absolute;
     top: 0;

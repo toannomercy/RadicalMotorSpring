@@ -51,7 +51,7 @@
                 <a href="/" class="nav-item nav-link">Home</a>
                 <a href="/products" class="nav-item nav-link">Motorcycles</a>
                 <div class="nav-item dropdown">
-                    <a href="/services" class="nav-item nav-link">Services</a>
+                    <a href="/services" class="nav-item nav-link" sec:authorize="hasAnyAuthority('ADMIN','USER')">Services</a>
                 </div>
                 <sec:authorize access="isAuthenticated()">
                     <a class="btn btn-primary py-4 px-lg-5 d-lg-block" id="logout-btn-gradient"
