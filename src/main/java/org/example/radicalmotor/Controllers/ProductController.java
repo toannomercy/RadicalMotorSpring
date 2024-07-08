@@ -8,9 +8,12 @@ import org.example.radicalmotor.Services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,18 +64,27 @@ public class ProductController {
         return "product/index";
     }
 
-    public String showProductDetail(@NotNull Model model, @RequestParam String chassisNumber) {
+    @GetMapping("/detail/{chassisNumber}")
+    public String showProductDetail(@NotNull Model model, @PathVariable String chassisNumber) {
         Vehicle vehicle = vehicleService.getByChassisNumber(chassisNumber);
         if (vehicle == null) {
-            return "redirect:/products";
+            return "error/404";
         }
-
+        List<Image> images = vehicle.getImages();
+        String formattedPrice = formatPrice(vehicle.getCostId().getBaseCost());
+        model.addAttribute("images", images);
         model.addAttribute("product", vehicle);
         model.addAttribute("vehicleTypes", vehicleTypeService.getAllVehicleTypes());
         model.addAttribute("suppliers", supplierService.getAllSuppliers());
-        model.addAttribute("costTables", costTableService.getAllCostTables());
+        model.addAttribute("formattedPrice", formattedPrice);
 
         return "product/detail";
+    }
+    private String formatPrice(double price) {
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+        symbols.setGroupingSeparator('.');
+        DecimalFormat decimalFormat = new DecimalFormat("#,###", symbols);
+        return decimalFormat.format(price);
     }
 
 }

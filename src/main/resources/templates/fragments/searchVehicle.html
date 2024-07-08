@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:fragment="searchVehicle" style="min-width: 100px" class="col-md-2 mx-4 sticky-search" data-aos="fade-up">
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" th:action="@{/products}" method="get">
+            <div class="input-group">
+                <input name="searchString" type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                <button style="background-color: rgb(216, 19, 36) !important; border-color: rgb(216, 19, 36) !important" class="btn btn-primary" type="submit">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+        <button style="width:100% !important;" class="btn btn-secondary mt-1">Type</button>
+        <!-- Filter by Vehicle Type -->
+        <form th:action="@{/products}" method="get">
+            <div class="list-group list-group-flush">
+                <a th:each="vehicleType : ${vehicleTypes}" th:href="@{/products(vehicleType=${vehicleType.vehicleTypeName})}" class="list-group-item list-group-item-action text-primary text-center">
+                    <span th:text="${vehicleType.vehicleTypeName}"></span>
+                </a>
+                <a class="list-group-item list-group-item-action text-primary text-center" th:href="@{/products}">All</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

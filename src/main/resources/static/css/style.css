@@ -680,5 +680,62 @@ header {
     width: 100%;
     height: auto;
 }
+/*Custom Product Detail*/
+.product-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.product-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+}
+
+.color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.color.red {
+    background-color: red;
+}
+
+.color.silver {
+    background-color: silver;
+}
+
+.color.black {
+    background-color: black;
+}
+
+.features img {
+    margin-right: 10px;
+}
+
+/*End*/
+
+/*Zoom-in Product card*/
+.card {
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+.zoom-in {
+    transition: transform 0.3s ease;
+}
+
+.zoom-in:hover {
+    transform: scale(1.1);
+}
+
 
 

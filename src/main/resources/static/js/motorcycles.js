@@ -3,7 +3,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         var myCarousel = document.querySelector('#header-carousel');
         var carousel = new bootstrap.Carousel(myCarousel, {
-            interval: 2000,
+            interval: 4000,
             wrap: true
         });
 

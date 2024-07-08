@@ -4,8 +4,6 @@
 <body>
 <th:block th:replace="~{layout::header}"></th:block>
 <div class="container">
-    <script src="/js/swiper-bundle.min.js"></script>
-
     <!-- Section 1 -->
     <section class="section home_sec_1">
         <div class="banner_slider swiper-container swiper-container-initialized swiper-container-horizontal">
@@ -83,7 +81,7 @@
                 </div>
                 <h2 class="text_center text_white text_up">HIGHLIGHTED EVENTS</h2>
 
-                <div class="wrap_slider aos-init aos-animate" data-aos="fade-up" data-aos-duration="500">
+                <div class="wrap_slider aos-init aos-animate" data-aos="fade-up">
                     <div class="slider swiper-container swiper-container-initialized swiper-container-horizontal">
                         <div class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
                             <div class="swiper-slide  swiper-slide-active">
@@ -119,12 +117,12 @@
 <!-- Section 3 -->
 
 <section class="section home_sec_3">
-    <div class="banner" data-aos="fade-up" data-aos-duration="500">
+    <div class="banner" data-aos="fade-up">
         <img width="2552" height="616" src="/img/banner-mid-home-1.jpg" class="" alt="" decoding="async" loading="lazy" />
     </div>
     <div class="grid-container">
         <div class="grid-100">
-            <div class="wrap_slider" data-aos="fade-up" data-aos-duration="500">
+            <div class="wrap_slider" data-aos="fade-up">
                 <div class="slider swiper-container">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide">
@@ -165,7 +163,7 @@
     <div class="grid-container">
         <div class="grid-100">
             <div class="wrap">
-                <div class="item" data-aos="fade-up" data-aos-duration="500">
+                <div class="item" data-aos="fade-up">
                     <div class="box_img">
                         <img width="300" height="263" src="/img/psd-1.jpeg" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -177,7 +175,7 @@
                     </div>
                     <a href="#" title="" target="" class="style_center max"></a>
                 </div>
-                <div class="item" data-aos="fade-up" data-aos-duration="500">
+                <div class="item" data-aos="fade-up">
                     <div class="box_img">
                         <img width="300" height="263" src="/img/psd-2.png" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -189,7 +187,7 @@
                     </div>
                     <a href="#" title="" target="" class="style_center max"></a>
                 </div>
-                <div class="item" data-aos="fade-up" data-aos-duration="500">
+                <div class="item" data-aos="fade-up">
                     <div class="box_img">
                         <img width="300" height="263" src="/img/psd-3.png" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -201,7 +199,7 @@
                     </div>
                     <a href="#" title="" target="" class="style_center max"></a>
                 </div>
-                <div class="item" data-aos="fade-up" data-aos-duration="500">
+                <div class="item" data-aos="fade-up">
                     <div class="box_img">
                         <img width="300" height="263" src="/img/psd-4.png" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -223,11 +221,11 @@
 <section class="section home_sec_6">
     <div class="grid-container">
         <div class="grid-100">
-            <h2 class="heading_h2 text_center" data-aos="fade-up" data-aos-duration="500">
+            <h2 class="heading_h2 text_center" data-aos="fade-up">
                 NEWS
             </h2>
             <div class="wrap_post display_flex_wrap">
-                <div class="item_post" data-aos="fade-up" data-aos-duration="500">
+                <div class="item_post" data-aos="fade-up">
                     <div class="box_img">
                         <img width="606" height="319" src="/img/news-1.png" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -241,7 +239,7 @@
                     </div>
                     <a href="#" title="Thông báo dời showroom KTM East Saigon" class="style_center max"></a>
                 </div>
-                <div class="item_post" data-aos="fade-up" data-aos-duration="500">
+                <div class="item_post" data-aos="fade-up">
                     <div class="box_img">
                         <img width="1200" height="628" src="/img/news-2.jpg" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -255,7 +253,7 @@
                     </div>
                     <a href="#" title="Hàng trăm chiếc KTM &#038; Husqvarna hội tụ tại Giải tranh tài xe cào cào VMF4 diễn ra tại Bảo Lộc" class="style_center max"></a>
                 </div>
-                <div class="item_post" data-aos="fade-up" data-aos-duration="500">
+                <div class="item_post" data-aos="fade-up">
                     <div class="box_img">
                         <img width="1200" height="628" src="/img/news-3.jpg" class="" alt="" decoding="async" loading="lazy" />
                     </div>
@@ -278,5 +276,10 @@
 
 <th:block th:replace="~{layout::footer}"></th:block>
 <th:block th:replace="~{layout::script}"></th:block>
+<script>
+    AOS.init({
+        duration: 800,
+    });
+</script>
 </body>
 </html>
