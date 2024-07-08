@@ -47,4 +47,8 @@ public class VehicleService {
 
         return formattedPrices;
     }
+
+    public Vehicle getByChassisNumber(String chassisNumber) {
+        return productRepository.findById(chassisNumber).orElse(null);
+    }
 }

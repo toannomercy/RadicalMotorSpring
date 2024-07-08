@@ -672,6 +672,13 @@
 #sigin-btn-gradient:hover {
     background: linear-gradient(98.3deg, rgb(255, 0, 0) 10.6%, rgb(0, 0, 0) 97.7%) !important;
 }
-
+header {
+    position: fixed;
+    left: auto;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    height: auto;
+}
 
 

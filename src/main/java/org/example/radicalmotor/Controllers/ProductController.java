@@ -61,4 +61,18 @@ public class ProductController {
         return "product/index";
     }
 
+    public String showProductDetail(@NotNull Model model, @RequestParam String chassisNumber) {
+        Vehicle vehicle = vehicleService.getByChassisNumber(chassisNumber);
+        if (vehicle == null) {
+            return "redirect:/products";
+        }
+
+        model.addAttribute("product", vehicle);
+        model.addAttribute("vehicleTypes", vehicleTypeService.getAllVehicleTypes());
+        model.addAttribute("suppliers", supplierService.getAllSuppliers());
+        model.addAttribute("costTables", costTableService.getAllCostTables());
+
+        return "product/detail";
+    }
+
 }
