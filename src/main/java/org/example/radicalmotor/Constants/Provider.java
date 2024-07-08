@@ -6,5 +6,6 @@ public enum Provider {
     LOCAL("Local"),
     GOOGLE("Google");
     public final String value;
+
 }
 

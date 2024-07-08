@@ -43,7 +43,7 @@ public class User implements UserDetails {
     @Email
     private String email;
     @Column(name = "phone", length = 10, unique = true)
-    @Length(min = 10, max = 10, message = "Phone must be 10 characters")
+    @Length(min = 9, max = 10, message = "Phone must be 9-10 characters")
     @Pattern(regexp = "^[0-9]*$", message = "Phone must be number")
     private String phone;
     @Column(name="gender", length = 10)
@@ -59,7 +59,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> userRoles = this.getRoles();
         return userRoles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .toList();
     }
     @Override

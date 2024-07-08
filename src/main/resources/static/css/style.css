@@ -662,16 +662,27 @@
 
 /*Sig In Btn Gradient*/
 #manage,
-#sigin-btn-gradient {
+#signin-btn-gradient {
     background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(255, 0, 0) 97.7%) !important;
     border: none;
 }
 
-/*sigin-btn-gradient hover*/
+/*signin-btn-gradient hover*/
 #manage:hover,
-#sigin-btn-gradient:hover {
+#signin-btn-gradient:hover {
     background: linear-gradient(98.3deg, rgb(255, 0, 0) 10.6%, rgb(0, 0, 0) 97.7%) !important;
 }
 
+/*Sig In Btn Gradient*/
+#manage,
+#logout-btn-gradient {
+    background: linear-gradient(98.3deg, rgb(0, 0, 0) 10.6%, rgb(255, 0, 0) 97.7%) !important;
+    border: none;
+}
 
+/*signin-btn-gradient hover*/
+#manage:hover,
+#logout-btn-gradient:hover {
+    background: linear-gradient(98.3deg, rgb(255, 0, 0) 10.6%, rgb(0, 0, 0) 97.7%) !important;
+}
 

@@ -1,7 +1,9 @@
 package org.example.radicalmotor.Constants;
+
 import lombok.AllArgsConstructor;
+
 @AllArgsConstructor
-public enum Role {
+public enum RoleType {
     ADMIN(1),
     USER(2),
     CREATOR(3);
