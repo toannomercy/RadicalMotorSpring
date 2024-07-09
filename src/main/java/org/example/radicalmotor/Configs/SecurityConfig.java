@@ -6,14 +6,12 @@ import org.example.radicalmotor.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -33,13 +31,14 @@ public class SecurityConfig {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-    private ClientRegistrationRepository clientRegistrationRepository;
+    private HandlerFailureLogin handlerFailureLogin;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**","/scss/**","/Theme/**","/img/**","/images/profiles/**","/jquery/**","/lib/**", "/oauth2/**", "/auth/register", "/auth/login", "/error").permitAll()
+                        .requestMatchers("/css/**", "/js/**","/scss/**","/Theme/**","/img/**","/images/profiles/**","/jquery/**","/lib/**", "/oauth2/**", "/auth/register/**", "/auth/login/**", "/error/**", "/auth/forgotPassword/**", "/auth/resetPassword/**").permitAll()
                         .requestMatchers("/admin/**").hasAnyAuthority(String.valueOf(RoleType.ADMIN))
 //                        .requestMatchers("/vehicles/edit/**", "/vehicles/delete", "/vehicles/add", "/vehicle-type/add", "/vehicle-type", "/vehicle-type/edit", "/vehicle-type/delete").hasAnyAuthority(String.valueOf(RoleType.ADMIN)))
                         .requestMatchers("/products", "/products/detail").hasAnyAuthority(String.valueOf(RoleType.USER), String.valueOf(RoleType.ADMIN))
@@ -56,9 +55,11 @@ public class SecurityConfig {
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/auth/login")
-                        .loginProcessingUrl("/login")
+                        .loginProcessingUrl("/auth/login")
                         .defaultSuccessUrl("/")
-                        .failureUrl("/users/login?error=true")
+                        .failureUrl("/auth/login?error=true")
+                        .successHandler(successHandler())
+                        .failureHandler(handlerFailureLogin)
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -84,7 +85,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationSuccessHandler successHandler() {
-        return new HandlerOAuth2SuccessLogin();
+        return new HandlerSuccessLogin();
     }
 
     @Bean
@@ -93,14 +94,6 @@ public class SecurityConfig {
         authProvider.setUserDetailsService(userService);
         authProvider.setPasswordEncoder(passwordEncoder);
         return authProvider;
-    }
-
-    @Bean
-    public GrantedAuthoritiesMapper grantedAuthoritiesMapper() {
-        SimpleAuthorityMapper authorityMapper = new SimpleAuthorityMapper();
-        authorityMapper.setConvertToUpperCase(true);
-        authorityMapper.setPrefix("");
-        return authorityMapper;
     }
 
     @Bean

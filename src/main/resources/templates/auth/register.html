@@ -4,12 +4,13 @@
     <title>Register</title>
 </head>
 <body class="d-flex flex-column h-100 register-page">
+<th:block th:replace="~{layout::header}"></th:block>
 <div class="container py-5 h-100">
     <div class="row justify-content-center align-items-center h-100">
         <div class="col-12 col-lg-6 col-md-8 col-xl-5">
             <div class="card shadow" style="border-radius: 1rem;">
                 <div class="card-body p-5 text-center">
-                    <h3>Sign up to <strong>RadicalMotor</strong></h3>
+                    <h3>Register to <strong>RadicalMotor</strong></h3>
                     <p class="mb-4 text-secondary">Welcome to RadicalMotor, please register to continue.</p>
                     <form th:action="@{/auth/register}" method="post">
                         <div th:if="${errors}" class="alert alert-danger justify-content-center" role="alert">
@@ -43,5 +44,6 @@
         </div>
     </div>
 </div>
+<th:block th:replace="~{layout::footer}"></th:block>
 </body>
 </html>
