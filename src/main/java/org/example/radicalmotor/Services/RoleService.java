@@ -1,6 +1,7 @@
 package org.example.radicalmotor.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.radicalmotor.Constants.RoleType;
 import org.example.radicalmotor.Entities.Role;
 import org.example.radicalmotor.Repositories.IRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
