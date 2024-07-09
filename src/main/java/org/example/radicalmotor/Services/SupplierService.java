@@ -17,4 +17,7 @@ public class SupplierService {
     public List<Supplier> getAllSuppliers() {
         return supplierRepository.findAll();
     }
+    public void addSupplier(Supplier supplier) {
+        supplierRepository.save(supplier);
+    }
 }

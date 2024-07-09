@@ -17,4 +17,10 @@ public class CostTableService {
     public List<CostTable> getAllCostTables() {
         return costTableRepository.findAll();
     }
+    public CostTable getCostTableById(Long id) {
+        return costTableRepository.findById(id).orElse(null);
+    }
+    public void addCostTable(CostTable costTable) {
+        costTableRepository.save(costTable);
+    }
 }
