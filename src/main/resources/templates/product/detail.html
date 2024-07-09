@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="~{layout::head}">
     <meta charset="UTF-8">
     <title>Detail</title>
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col-md-5 mb-4">
-                <h1 class="text-secondary" th:text="${product.vehicleName}"></h1>
+                <h2 class="text-secondary" th:text="${product.vehicleName}"></h2>
                 <p class="text-secondary"><strong>Giá chỉ từ:</strong></p>
                 <h4 class="text-primary" th:text="${formattedPrice} + ' VND'"></h4>
                 <p class="text-secondary"><strong>Màu sắc:</strong></p>
