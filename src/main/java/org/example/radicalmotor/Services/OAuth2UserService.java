@@ -3,8 +3,10 @@ package org.example.radicalmotor.Services;
 import jakarta.transaction.Transactional;
 import org.example.radicalmotor.Constants.Provider;
 import org.example.radicalmotor.Constants.RoleType;
+import org.example.radicalmotor.Entities.Customer;
 import org.example.radicalmotor.Entities.Role;
 import org.example.radicalmotor.Entities.User;
+import org.example.radicalmotor.Repositories.ICustomerRepository;
 import org.example.radicalmotor.Repositories.IRoleRepository;
 import org.example.radicalmotor.Repositories.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
     private IRoleRepository iRoleRepository;
 
+    @Autowired
+    private ICustomerRepository iCustomerRepository;
+
     private static final Logger logger = LoggerFactory.getLogger(OAuth2UserService.class);
 
     @Override
@@ -54,7 +59,7 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             user.setEmail(email);
             user.setUsername(oauth2User.getName());
             user.setPassword(new BCryptPasswordEncoder().encode("default_password"));
-            user.setProvider(String.valueOf(Provider.GOOGLE));
+            user.setProvider(Provider.GOOGLE);
 
             Role userRole = iRoleRepository.findByName(RoleType.USER).orElseGet(() -> {
                 Role newRole = new Role();
@@ -65,6 +70,10 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
             user.setRoles(Collections.singleton(userRole));
             logger.debug("Saving new user with roles: {}", user.getRoles());
             iUserRepository.save(user);
+
+            Customer customer = new Customer();
+            customer.setUserId(user);
+            iCustomerRepository.save(customer);
         }
 
         Set<GrantedAuthority> authorities = user.getRoles().stream()
