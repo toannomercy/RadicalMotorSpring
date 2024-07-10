@@ -17,4 +17,11 @@ public class ImageService {
     public Image getImageByChassisNumber(String chassisNumber) {
         return imageRepository.findByChassisNumber(chassisNumber);
     }
+    @Transactional
+    public void deleteImage(Image image) {
+        if (image != null && image.getId() != null) {
+            imageRepository.deleteById(image.getId());
+        }
+    }
+
 }

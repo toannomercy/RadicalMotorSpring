@@ -1,6 +1,7 @@
 package org.example.radicalmotor.Services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.radicalmotor.Entities.Image;
 import org.example.radicalmotor.Entities.Vehicle;
 import org.example.radicalmotor.Repositories.IVehicleRepository;
 import org.springframework.data.domain.PageRequest;
@@ -14,29 +15,30 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.SERIALIZABLE, rollbackFor = {Exception.class, Throwable.class})
 public class VehicleService {
-    private final IVehicleRepository productRepository;
+    private final IVehicleRepository vehicleRepository;
 
-    public List<Vehicle> getAllVehicles(Integer pageNo, Integer pageSize, String sortBy) {
-        return productRepository.findAllVehicles(pageNo, pageSize, sortBy);
+    public List<Vehicle> getAllVehicles() {
+        return vehicleRepository.findAllActiveVehicles();
     }
 
     public List<Vehicle> searchVehicles(String keyword, Integer pageNo, Integer pageSize, String sortBy) {
-        return productRepository.searchVehicle(keyword);
+        return vehicleRepository.searchVehicle(keyword);
     }
 
     public List<Vehicle> getVehiclesByType(String vehicleTypeName, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
-        return productRepository.findByVehicleTypeName(vehicleTypeName, pageable).getContent();
+        return vehicleRepository.findByVehicleTypeName(vehicleTypeName, pageable).getContent();
     }
 
     public Map<String, String> getVehiclePrices() {
-        List<Vehicle> vehicles = productRepository.findAll();
+        List<Vehicle> vehicles = vehicleRepository.findAll();
         Map<String, String> formattedPrices = new HashMap<>();
         DecimalFormat df = new DecimalFormat("#,###");
 
@@ -48,7 +50,27 @@ public class VehicleService {
         return formattedPrices;
     }
 
-    public Vehicle getByChassisNumber(String chassisNumber) {
-        return productRepository.findById(chassisNumber).orElse(null);
+    public Optional<Vehicle> getByChassisNumber(String chassisNumber) {
+        return vehicleRepository.findById(chassisNumber);
+    }
+
+    public void addVehicle(Vehicle vehicle) {
+        vehicleRepository.save(vehicle);
+    }
+
+    public void updateVehicle(Vehicle vehicle) {
+        Vehicle existingVehicle = vehicleRepository.findById(vehicle.getChassisNumber()).orElse(null);
+        assert existingVehicle != null;
+        existingVehicle.setVehicleTypeId(vehicle.getVehicleTypeId());
+        existingVehicle.setVehicleName(vehicle.getVehicleName());
+        existingVehicle.setColor(vehicle.getColor());
+        existingVehicle.setImportDate(vehicle.getImportDate());
+        existingVehicle.setVersion(vehicle.getVersion());
+        existingVehicle.setSegment(vehicle.getSegment());
+        existingVehicle.setSupplierId(vehicle.getSupplierId());
+        existingVehicle.setCostId(vehicle.getCostId());
+        existingVehicle.setImages(vehicle.getImages());
+        vehicleRepository.save(existingVehicle);
     }
 }
+

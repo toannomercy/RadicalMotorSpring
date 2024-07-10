@@ -17,6 +17,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
@@ -42,7 +43,7 @@ public class ProductController {
         } else if (vehicleType != null && !vehicleType.isEmpty()) {
             vehicles = vehicleService.getVehiclesByType(vehicleType, pageNo, pageSize, sortBy);
         } else {
-            vehicles = vehicleService.getAllVehicles(pageNo, pageSize, sortBy);
+            vehicles = vehicleService.getAllVehicles();
         }
 
         Map<String, List<Image>> vehicleImages = new HashMap<>();
@@ -66,10 +67,11 @@ public class ProductController {
 
     @GetMapping("/detail/{chassisNumber}")
     public String showProductDetail(@NotNull Model model, @PathVariable String chassisNumber) {
-        Vehicle vehicle = vehicleService.getByChassisNumber(chassisNumber);
-        if (vehicle == null) {
+        Optional<Vehicle> vehicleOptional = vehicleService.getByChassisNumber(chassisNumber);
+        if (vehicleOptional.isEmpty()) {
             return "error/404";
         }
+        Vehicle vehicle = vehicleOptional.get();
         List<Image> images = vehicle.getImages();
         String formattedPrice = formatPrice(vehicle.getCostId().getBaseCost());
         model.addAttribute("images", images);

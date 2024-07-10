@@ -26,7 +26,6 @@ public class Vehicle {
     @NotBlank(message = "vehicleName must not be blank")
     private String vehicleName;
     @Column(name = "importDate")
-    @NotBlank(message = "importDate must not be blank")
     private LocalDate importDate;
     @Column(name = "version", length = 50, nullable = false)
     @Size(min = 1, max = 50, message = "version must be between 1 and 50 characters")

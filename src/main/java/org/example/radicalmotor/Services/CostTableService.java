@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,12 +16,20 @@ import java.util.List;
 public class CostTableService {
     private final ICostTableRepository costTableRepository;
     public List<CostTable> getAllCostTables() {
-        return costTableRepository.findAll();
+        return costTableRepository.findByIsDeletedFalse();
     }
-    public CostTable getCostTableById(Long id) {
-        return costTableRepository.findById(id).orElse(null);
+    public Optional<CostTable> getCostTableById(Long id) {
+        return costTableRepository.findById(id);
     }
     public void addCostTable(CostTable costTable) {
         costTableRepository.save(costTable);
+    }
+    public void updateCostTable(CostTable costTable) {
+        CostTable existingCostTable = costTableRepository.findById(costTable.getCostId())
+                .orElse(null);
+        assert existingCostTable != null;
+        existingCostTable.setDateCreated(costTable.getDateCreated());
+        existingCostTable.setBaseCost(costTable.getBaseCost());
+        costTableRepository.save(existingCostTable);
     }
 }

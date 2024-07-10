@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -15,12 +16,20 @@ import java.util.List;
 public class VehicleTypeService {
     private final IVehicleTypeRepository vehicleTypeRepository;
     public List<VehicleType> getAllVehicleTypes() {
-        return vehicleTypeRepository.findAll();
+        return vehicleTypeRepository.findByIsDeletedFalse();
     }
-    public VehicleType getVehicleTypeById(Long vehicleTypeId) {
-        return vehicleTypeRepository.findById(vehicleTypeId).orElse(null);
+    public Optional<VehicleType> getVehicleTypeById(Long vehicleTypeId) {
+        return vehicleTypeRepository.findById(vehicleTypeId);
     }
     public void addVehicleType(VehicleType vehicleType) {
         vehicleTypeRepository.save(vehicleType);
+    }
+    public void updateVehicleType(VehicleType vehicleType) {
+        VehicleType existingVehicleType = vehicleTypeRepository.findById(vehicleType
+                        .getVehicleTypeId())
+                .orElse(null);
+        assert existingVehicleType != null;
+        existingVehicleType.setVehicleTypeName(vehicleType.getVehicleTypeName());
+        vehicleTypeRepository.save(existingVehicleType);
     }
 }
