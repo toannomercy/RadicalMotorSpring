@@ -722,11 +722,11 @@ header {
 /*End*/
 
 /*Zoom-in Product card*/
-.card {
+.card-vehicle {
     transition: transform 0.3s ease;
 }
 
-.card:hover {
+.card-vehicle:hover {
     transform: scale(1.1);
 }
 .zoom-in {

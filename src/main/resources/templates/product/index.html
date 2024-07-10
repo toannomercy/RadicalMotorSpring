@@ -15,7 +15,7 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div th:each="vehicle : ${products}" class="col-md-4 mb-4" data-aos="zoom-in">
                 <a th:href="@{/products/detail/{chassisNumber}(chassisNumber=${vehicle.getChassisNumber()})}">
-                    <div style="min-width: 35vh;" class="card h-100 zoom-in">
+                    <div style="min-width: 35vh;" class="card-vehicle card h-100 zoom-in">
                         <div class="card-body">
                             <img th:if="${vehicleImages != null and vehicleImages.containsKey(vehicle.chassisNumber)}" th:src="${vehicleImages.get(vehicle.chassisNumber).get(0).imageUrl}" class="card-img-bottom img-fluid" alt="Vehicle Image">
                         </div>
