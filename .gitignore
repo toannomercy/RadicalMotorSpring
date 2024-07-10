@@ -1,4 +1,4 @@
-HELP.md
+ưHELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -6,6 +6,7 @@ target/
 
 ### Ignore Keys ###
 /src/main/resources/static/json/serviceAccountKey.json
+
 
 ### STS ###
 .apt_generated
