@@ -28,13 +28,19 @@ public class VehicleService {
         return vehicleRepository.findAllActiveVehicles();
     }
 
-    public List<Vehicle> searchVehicles(String keyword, Integer pageNo, Integer pageSize, String sortBy) {
-        return vehicleRepository.searchVehicle(keyword);
-    }
-
     public List<Vehicle> getVehiclesByType(String vehicleTypeName, Integer pageNo, Integer pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         return vehicleRepository.findByVehicleTypeName(vehicleTypeName, pageable).getContent();
+    }
+
+    public List<Vehicle> getFilteredVehicles(List<String> vehicleTypes, Double minPrice, Double maxPrice, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        return vehicleRepository.findByVehicleTypesAndPriceRange(vehicleTypes, minPrice, maxPrice, pageable).getContent();
+    }
+
+    public List<Vehicle> searchVehicleNamesAndTypes(String searchString, Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        return vehicleRepository.searchVehicleNamesAndTypes(searchString, pageable).getContent();
     }
 
     public Map<String, String> getVehiclePrices() {

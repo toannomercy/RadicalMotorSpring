@@ -10,22 +10,31 @@
 
 <!--Vehicle Image-->
 <div class="row">
-    <th:block th:replace="fragments/searchVehicle :: searchVehicle"></th:block>
+    <th:block
+            th:replace="fragments/searchVehicle :: searchVehicle(menus=${menus}, vehicleTypes=${vehicleTypes}, priceRanges=${priceRanges})"></th:block>
     <div class="col-md-9 me-4">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div th:each="vehicle : ${products}" class="col-md-4 mb-4" data-aos="zoom-in">
                 <a th:href="@{/products/detail/{chassisNumber}(chassisNumber=${vehicle.getChassisNumber()})}">
                     <div style="min-width: 35vh;" class="card h-100 zoom-in">
                         <div class="card-body">
-                            <img th:if="${vehicleImages != null and vehicleImages.containsKey(vehicle.chassisNumber)}" th:src="${vehicleImages.get(vehicle.chassisNumber).get(0).imageUrl}" class="card-img-bottom img-fluid" alt="Vehicle Image">
+                            <img th:if="${vehicleImages != null and vehicleImages.containsKey(vehicle.chassisNumber)}"
+                                 th:src="${vehicleImages.get(vehicle.chassisNumber).get(0).imageUrl}"
+                                 class="card-img-bottom img-fluid" alt="Vehicle Image">
                         </div>
                         <div class="card-footer d-flex justify-content-between align-items-start">
                             <div>
-                                <h6 style="font-weight: bold !important;" class="card-title mb-0 text-uppercase text-secondary" th:text="${vehicle.vehicleName}"></h6>
-                                <p style="font-style: italic !important;" class="card-text mb-0 text-uppercase text-dark" th:text="${vehicle.vehicleTypeId.vehicleTypeName}"></p>
+                                <h6 style="font-weight: bold !important;"
+                                    class="card-title mb-0 text-uppercase text-secondary"
+                                    th:text="${vehicle.vehicleName}"></h6>
+                                <p style="font-style: italic !important;"
+                                   class="card-text mb-0 text-uppercase text-dark"
+                                   th:text="${vehicle.vehicleTypeId.vehicleTypeName}"></p>
                             </div>
                             <div>
-                                <h6 style="font-weight: bold !important;" class="card-text mb-0 text-primary" th:if="${prices != null and prices.containsKey(vehicle.chassisNumber)}" th:text="${prices.get(vehicle.chassisNumber)} + ' VND'"></h6>
+                                <h6 style="font-weight: bold !important;" class="card-text mb-0 text-primary"
+                                    th:if="${prices != null and prices.containsKey(vehicle.chassisNumber)}"
+                                    th:text="${prices.get(vehicle.chassisNumber)} + ' VND'"></h6>
                             </div>
                         </div>
                     </div>
@@ -39,6 +48,75 @@
 <script>
     AOS.init({
         duration: 1000,
+    });
+
+    function toggleFilter() {
+        const filterSection = document.getElementById("filterSection");
+        if (filterSection.style.display === "none" || filterSection.style.display === "") {
+            filterSection.style.display = "block";
+        } else {
+            filterSection.style.display = "none";
+        }
+    }
+
+    function clearFilters() {
+        const filterForm = document.getElementById("filterForm");
+        if (filterForm) {
+            filterForm.reset();
+        }
+        window.location.href = '/products';
+    }
+
+    function applyFilters() {
+        $("#minPrice").val($("#minPriceInput").val());
+        $("#maxPrice").val($("#maxPriceInput").val());
+    }
+
+    $(function () {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 200000,
+            values: [5000, 10000],
+            slide: function (event, ui) {
+                $("#minPriceInput").val(ui.values[0]);
+                $("#maxPriceInput").val(ui.values[1]);
+                $("#minPrice").val(ui.values[0]);
+                $("#maxPrice").val(ui.values[1]);
+            }
+        });
+
+        $("#minPriceInput").val($("#slider-range").slider("values", 0));
+        $("#maxPriceInput").val($("#slider-range").slider("values", 1));
+        $("#minPrice").val($("#slider-range").slider("values", 0));
+        $("#maxPrice").val($("#slider-range").slider("values", 1));
+
+        $("#minPriceInput").on("input", function () {
+            var minValue = $(this).val();
+            var maxValue = $("#maxPriceInput").val();
+            $("#slider-range").slider("values", [minValue, maxValue]);
+            $("#minPrice").val(minValue);
+        });
+
+        $("#maxPriceInput").on("input", function () {
+            var minValue = $("#minPriceInput").val();
+            var maxValue = $(this).val();
+            $("#slider-range").slider("values", [minValue, maxValue]);
+            $("#maxPrice").val(maxValue);
+        });
+
+        $("#searchString").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/products/autocomplete",
+                    data: {term: request.term},
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2
+        });
     });
 </script>
 </body>

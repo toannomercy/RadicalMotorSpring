@@ -102,7 +102,7 @@ public class HandlerSuccessLogin extends SimpleUrlAuthenticationSuccessHandler {
             boolean isAdmin = userDetails.getAuthorities().contains(new SimpleGrantedAuthority(String.valueOf(RoleType.ADMIN)));
 
             if (isAdmin) {
-                setDefaultTargetUrl("/roles");
+                setDefaultTargetUrl("/admin");
             } else {
                 setDefaultTargetUrl("/");
             }

@@ -10,7 +10,7 @@
 <th:block th:replace="fragments/slider :: slider"></th:block>
 <div class="row">
     <!-- Search Vehicle-->
-    <th:block th:replace="fragments/searchVehicle :: searchVehicle"></th:block>
+    <th:block th:replace="fragments/searchVehicle :: searchVehicle(menus=${menus}, vehicleTypes=${vehicleTypes}, priceRanges=${priceRanges})"></th:block>
     <div class="col-md-9 me-4" data-aos="fade-up">
         <div class="row">
             <div class="col-md-7 mb-4">
@@ -97,6 +97,75 @@
 <script>
     AOS.init({
         duration: 1000,
+    });
+
+    function toggleFilter() {
+        const filterSection = document.getElementById("filterSection");
+        if (filterSection.style.display === "none" || filterSection.style.display === "") {
+            filterSection.style.display = "block";
+        } else {
+            filterSection.style.display = "none";
+        }
+    }
+
+    function clearFilters() {
+        const filterForm = document.getElementById("filterForm");
+        if (filterForm) {
+            filterForm.reset();
+        }
+        window.location.href = '/products';
+    }
+
+    function applyFilters() {
+        $("#minPrice").val($("#minPriceInput").val());
+        $("#maxPrice").val($("#maxPriceInput").val());
+    }
+
+    $(function () {
+        $("#slider-range").slider({
+            range: true,
+            min: 0,
+            max: 200000,
+            values: [5000, 10000],
+            slide: function (event, ui) {
+                $("#minPriceInput").val(ui.values[0]);
+                $("#maxPriceInput").val(ui.values[1]);
+                $("#minPrice").val(ui.values[0]);
+                $("#maxPrice").val(ui.values[1]);
+            }
+        });
+
+        $("#minPriceInput").val($("#slider-range").slider("values", 0));
+        $("#maxPriceInput").val($("#slider-range").slider("values", 1));
+        $("#minPrice").val($("#slider-range").slider("values", 0));
+        $("#maxPrice").val($("#slider-range").slider("values", 1));
+
+        $("#minPriceInput").on("input", function () {
+            var minValue = $(this).val();
+            var maxValue = $("#maxPriceInput").val();
+            $("#slider-range").slider("values", [minValue, maxValue]);
+            $("#minPrice").val(minValue);
+        });
+
+        $("#maxPriceInput").on("input", function () {
+            var minValue = $("#minPriceInput").val();
+            var maxValue = $(this).val();
+            $("#slider-range").slider("values", [minValue, maxValue]);
+            $("#maxPrice").val(maxValue);
+        });
+
+        $("#searchString").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/products/autocomplete",
+                    data: {term: request.term},
+                    success: function (data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2
+        });
     });
 </script>
 </body>
