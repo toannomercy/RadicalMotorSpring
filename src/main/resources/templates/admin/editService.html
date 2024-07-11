@@ -9,10 +9,14 @@
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <div th:replace="~{adminLayout :: navbar}"></div>
-            <div class="container-fluid">
+            <div style="background-color: #fff;
+                                 padding: 30px;
+                                 border-radius: 10px;
+                                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+                 class="container-fluid col-md-6 justify-content-center">
                 <div class="row">
                     <div class="col-md-12">
-                        <h2 class="text-dark">Edit Service</h2>
+                        <h2 class="text-dark text-center">Edit Service</h2>
                         <form th:action="@{/admin/editService}" th:object="${service}" method="post">
                             <div class="form-group">
                                 <label for="serviceId">Service ID</label>
@@ -28,7 +32,10 @@
                                 <input type="text" class="form-control" id="serviceDescription"
                                        th:field="*{serviceDescription}" required>
                             </div>
-                            <button type="submit" class="btn btn-success mt-2">Save</button>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                <a href="/admin/services" class="btn btn-secondary btn-block">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </div>
