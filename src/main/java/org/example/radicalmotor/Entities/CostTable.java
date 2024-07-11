@@ -34,4 +34,7 @@ public class CostTable {
     @ToString.Exclude
     @JsonIgnore
     private List<Service> services;
+    public double getPrice() {
+        return baseCost;
+    }
 }

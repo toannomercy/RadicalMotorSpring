@@ -1,6 +1,7 @@
 package org.example.radicalmotor.Configs;
 
 import org.example.radicalmotor.Constants.RoleType;
+import org.example.radicalmotor.Entities.Cart;
 import org.example.radicalmotor.Services.OAuth2UserService;
 import org.example.radicalmotor.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.context.annotation.SessionScope;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 @Configuration
@@ -103,5 +105,11 @@ public class SecurityConfig {
     @Bean
     public SpringSecurityDialect springSecurityDialect() {
         return new SpringSecurityDialect();
+    }
+
+    @Bean
+    @SessionScope
+    public Cart cart() {
+        return new Cart();
     }
 }

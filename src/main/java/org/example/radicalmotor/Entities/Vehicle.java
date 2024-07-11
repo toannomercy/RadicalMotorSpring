@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -59,4 +60,9 @@ public class Vehicle {
     @ToString.Exclude
     @JsonIgnore
     private List<Image> images;
+
+    @JsonIgnore
+    public List<String> getImageUrls() {
+        return images.stream().map(Image::getImageUrl).collect(Collectors.toList());
+    }
 }

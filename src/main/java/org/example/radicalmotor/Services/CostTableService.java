@@ -2,7 +2,10 @@ package org.example.radicalmotor.Services;
 
 import lombok.RequiredArgsConstructor;
 import org.example.radicalmotor.Entities.CostTable;
+import org.example.radicalmotor.Entities.Vehicle;
 import org.example.radicalmotor.Repositories.ICostTableRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +34,15 @@ public class CostTableService {
         existingCostTable.setDateCreated(costTable.getDateCreated());
         existingCostTable.setBaseCost(costTable.getBaseCost());
         costTableRepository.save(existingCostTable);
+    }
+    public double getBaseCostByChassisNumber(String chassisNumber) {
+        Optional<Vehicle> vehicleOptional = costTableRepository.findVehicleWithCostByChassisNumber(chassisNumber);
+        return vehicleOptional.map(vehicle -> {
+            CostTable costTable = vehicle.getCostId();
+            if (costTable != null) {
+                return costTable.getBaseCost();
+            }
+            return 0.0;
+        }).orElse(0.0);
     }
 }

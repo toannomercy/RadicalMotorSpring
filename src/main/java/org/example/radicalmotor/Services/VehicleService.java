@@ -57,7 +57,7 @@ public class VehicleService {
     }
 
     public Optional<Vehicle> getByChassisNumber(String chassisNumber) {
-        return vehicleRepository.findById(chassisNumber);
+        return vehicleRepository.findByChassisNumberWithImages(chassisNumber);
     }
 
     public void addVehicle(Vehicle vehicle) {
