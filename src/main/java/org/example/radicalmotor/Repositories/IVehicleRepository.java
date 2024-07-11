@@ -12,6 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface IVehicleRepository extends
@@ -51,5 +52,9 @@ public interface IVehicleRepository extends
 
     @Query("SELECT v FROM Vehicle v WHERE v.vehicleName LIKE %:searchString% OR v.vehicleTypeId.vehicleTypeName LIKE %:searchString%")
     Page<Vehicle> searchVehicleNamesAndTypes(@Param("searchString") String searchString, Pageable pageable);
+
+    @Query("SELECT v FROM Vehicle v LEFT JOIN FETCH v.images WHERE v.chassisNumber = :chassisNumber")
+    Optional<Vehicle> findByChassisNumberWithImages(String chassisNumber);
+
 }
 

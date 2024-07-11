@@ -315,6 +315,10 @@
 .footer {
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url(../img/carousel-bg-1.jpg) center center no-repeat;
     background-size: cover;
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
+    /*z-index: 1000;*/
 }
 
 .footer .btn.btn-social {
@@ -861,3 +865,56 @@ header {
     background: #ccc;
     margin: 0 10px;
 }
+
+.cart-container {
+    margin-top: 50px;
+}
+
+.cart-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.cart-item {
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.cart-item:last-child {
+    border-bottom: none;
+}
+
+.cart-summary {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-top: 1px solid #dee2e6;
+}
+
+.cart-summary h5 {
+    margin-bottom: 20px;
+}
+
+.cart-summary ul {
+    padding: 0;
+    list-style: none;
+}
+
+.cart-summary ul li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.cart-summary ul li:last-child {
+    margin-bottom: 0;
+}
+
+.cart-summary .total {
+    font-weight: bold;
+}
+
+.btn-block {
+    width: 100%;
+}
+

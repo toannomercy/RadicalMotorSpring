@@ -10,7 +10,8 @@
 <th:block th:replace="fragments/slider :: slider"></th:block>
 <div class="row">
     <!-- Search Vehicle-->
-    <th:block th:replace="fragments/searchVehicle :: searchVehicle(menus=${menus}, vehicleTypes=${vehicleTypes}, priceRanges=${priceRanges})"></th:block>
+    <th:block
+            th:replace="fragments/searchVehicle :: searchVehicle(menus=${menus}, vehicleTypes=${vehicleTypes}, priceRanges=${priceRanges})"></th:block>
     <div class="col-md-9 me-4" data-aos="fade-up">
         <div class="row">
             <div class="col-md-7 mb-4">
@@ -31,15 +32,25 @@
                     <span class="color black"></span>
                 </div>
                 <br>
-                <p>Với KTM 390 DUKE 2024 hoàn toàn mới, mọi cung đường đều biến thành trường đua gymkhana đỉnh cao của riêng bạn. Sở hữu khả năng linh hoạt vượt trội, trọng lượng nhẹ, cùng sức mạnh bùng nổ, KTM 390 DUKE mới sẵn sàng chinh phục mọi khúc cua. Được trang bị các công nghệ hỗ trợ người lái tân tiến, khung xe hoàn toàn mới, hệ thống treo có thể điều chỉnh và diện mạo hầm hố đầy lôi cuốn, KTM 390 DUKE 2024 đã sẵn sàng để thống trị mọi cung đường.</p>
+                <p>Với KTM 390 DUKE 2024 hoàn toàn mới, mọi cung đường đều biến thành trường đua gymkhana đỉnh cao của
+                    riêng bạn. Sở hữu khả năng linh hoạt vượt trội, trọng lượng nhẹ, cùng sức mạnh bùng nổ, KTM 390 DUKE
+                    mới sẵn sàng chinh phục mọi khúc cua. Được trang bị các công nghệ hỗ trợ người lái tân tiến, khung
+                    xe hoàn toàn mới, hệ thống treo có thể điều chỉnh và diện mạo hầm hố đầy lôi cuốn, KTM 390 DUKE 2024
+                    đã sẵn sàng để thống trị mọi cung đường.</p>
                 <div class="row align-items-center mb-4">
                     <div class="col-md-6 text-center">
                         <img class="img-fluid" style="max-width: 20vh;" src="/img/ktm-logo.png" alt="Radical Motor">
                     </div>
                     <div class="col-md-6 text-center" data-aos="fade-up">
-                        <a class="btn btn-primary btn-lg" href="/">
-                            <i class="bi bi-cart4"></i> MUA NGAY
-                        </a>
+                        <form th:action="@{/add-to-cart}" method="post">
+                            <input type="hidden" name="chassisNumber" th:value="${product.chassisNumber}">
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="vehicleName" th:value="${product.vehicleName}">
+                            <input type="hidden" name="baseCost" th:value="${product.costId.baseCost}">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-cart4"></i> MUA NGAY
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -53,7 +64,11 @@
             <div class="col-md-6 mb-4">
                 <h3>ĐỊNH HÌNH PHONG CÁCH RIÊNG</h3>
                 <h4 class="text-primary">Kiểm soát hoàn toàn</h4>
-                <p>Với hệ thống phuộc trước WP APEX 43 mm dạng open cartridge có khả năng tùy chỉnh lực nén và độ hồi, cùng giảm xóc sau WP APEX với piston riêng biệt cho phép điều chỉnh độ hồi và tải trước, chinh phục cung đường nhựa yêu thích hay lướt qua những khúc cua ôm sát đánh dấu bằng cone trở nên dễ dàng hơn bao giờ hết. Chiếc KTM 390 DUKE này giúp bạn tìm được sự cân bằng lý tưởng giữa sự thoải mái và độ bám đường.</p>
+                <p>Với hệ thống phuộc trước WP APEX 43 mm dạng open cartridge có khả năng tùy chỉnh lực nén và độ hồi,
+                    cùng giảm xóc sau WP APEX với piston riêng biệt cho phép điều chỉnh độ hồi và tải trước, chinh phục
+                    cung đường nhựa yêu thích hay lướt qua những khúc cua ôm sát đánh dấu bằng cone trở nên dễ dàng hơn
+                    bao giờ hết. Chiếc KTM 390 DUKE này giúp bạn tìm được sự cân bằng lý tưởng giữa sự thoải mái và độ
+                    bám đường.</p>
             </div>
             <div class="col-md-4 mb-4">
                 <img src="/img/phongcach.png" alt="KTM 390 Duke 2024" class="img-fluid">
@@ -71,7 +86,11 @@
             <div class="col-md-6 mb-4">
                 <h3>SỨC MẠNH ÁP ĐẢO</h3>
                 <h4 class="text-primary">Động cơ</h4>
-                <p>Không chỉ được trang bị khối động cơ LC4c tân tiến nhất, KTM 390 DUKE 2024 còn được tăng cường sức mạnh với dung tích 399cc, mạnh mẽ hơn, tăng tốc mượt mà hơn và tổng thể nhẹ hơn trước. Với bề dày kinh nghiệm được tích lũy qua năm tháng trong việc chinh phục phân khúc 400cc, KTM 390 DUKE 2024 tiếp tục được tinh chỉnh hộp số, tối ưu hóa đầu xi-lanh và sẵn sàng đáp ứng tiêu chuẩn khí thải EURO5.2. Và hiển nhiên, KTM 390 Duke 2024 luôn trong trạng thái “READY TO RACE".</p>
+                <p>Không chỉ được trang bị khối động cơ LC4c tân tiến nhất, KTM 390 DUKE 2024 còn được tăng cường sức
+                    mạnh với dung tích 399cc, mạnh mẽ hơn, tăng tốc mượt mà hơn và tổng thể nhẹ hơn trước. Với bề dày
+                    kinh nghiệm được tích lũy qua năm tháng trong việc chinh phục phân khúc 400cc, KTM 390 DUKE 2024
+                    tiếp tục được tinh chỉnh hộp số, tối ưu hóa đầu xi-lanh và sẵn sàng đáp ứng tiêu chuẩn khí thải
+                    EURO5.2. Và hiển nhiên, KTM 390 Duke 2024 luôn trong trạng thái “READY TO RACE".</p>
             </div>
         </div>
         <hr>
@@ -83,7 +102,9 @@
             <div class="col-md-6 mb-4">
                 <h3>SOI SÁNG MÀN ĐÊM</h3>
                 <h4 class="text-primary">Hệ thống đèn led</h4>
-                <p>Xé tan màn đêm, tất cả các dòng xe KTM DUKE 2024 đều được trang bị đèn LED cực mạnh ở phía trước và sau. Những bộ đèn không chỉ hoạt động hiệu quả trong đêm tối mà còn đem lại khả năng chiếu sáng vượt trội khi đi qua những đoạn đường đông đúc hoặc sương mù.</p>
+                <p>Xé tan màn đêm, tất cả các dòng xe KTM DUKE 2024 đều được trang bị đèn LED cực mạnh ở phía trước và
+                    sau. Những bộ đèn không chỉ hoạt động hiệu quả trong đêm tối mà còn đem lại khả năng chiếu sáng vượt
+                    trội khi đi qua những đoạn đường đông đúc hoặc sương mù.</p>
             </div>
             <div class="col-md-4 mb-4">
                 <img src="/img/led.png" alt="led" class="img-fluid">

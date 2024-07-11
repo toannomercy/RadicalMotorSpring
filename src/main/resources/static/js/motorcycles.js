@@ -1,37 +1,37 @@
-﻿(function ($) {
-// Carousel navigation
-    document.addEventListener('DOMContentLoaded', function () {
-        var myCarousel = document.querySelector('#header-carousel');
-        var carousel = new bootstrap.Carousel(myCarousel, {
-            interval: 4000,
-            wrap: true
-        });
-
-        document.querySelector('.carousel-control-prev').addEventListener('click', function () {
-            carousel.prev();
-        });
-
-        document.querySelector('.carousel-control-next').addEventListener('click', function () {
-            carousel.next();
-        });
-    });
-
-//Swiper function
-    document.addEventListener("DOMContentLoaded", function () {
-        var swiper = new Swiper('.swiper-container', {
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            autoplay: {
-                delay: 5000,
-            },
-        });
-    });
+﻿// (function ($) {
+// // Carousel navigation
+//     document.addEventListener('DOMContentLoaded', function () {
+//         var myCarousel = document.querySelector('#header-carousel');
+//         var carousel = new bootstrap.Carousel(myCarousel, {
+//             interval: 4000,
+//             wrap: true
+//         });
+//
+//         document.querySelector('.carousel-control-prev').addEventListener('click', function () {
+//             carousel.prev();
+//         });
+//
+//         document.querySelector('.carousel-control-next').addEventListener('click', function () {
+//             carousel.next();
+//         });
+//     });
+//
+// //Swiper function
+//     document.addEventListener("DOMContentLoaded", function () {
+//         var swiper = new Swiper('.swiper-container', {
+//             loop: true,
+//             pagination: {
+//                 el: '.swiper-pagination',
+//             },
+//             navigation: {
+//                 nextEl: '.swiper-button-next',
+//                 prevEl: '.swiper-button-prev',
+//             },
+//             autoplay: {
+//                 delay: 5000,
+//             },
+//         });
+//     });
 
 
 
@@ -83,4 +83,4 @@
 //                 console.error('Error fetching vehicles:', error);
 //             });
 //     });
-})(jQuery);
+// })(jQuery);
