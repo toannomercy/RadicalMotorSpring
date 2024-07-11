@@ -35,6 +35,7 @@ public class AdminController {
     private final VehicleTypeService vehicleTypeService;
     private final SupplierService supplierService;
     private final CostTableService costTableService;
+    private final ServicesService servicesService;
     @GetMapping
     public String admin(
             @NotNull Model model,
@@ -378,5 +379,64 @@ public class AdminController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/services")
+    public String showServices(
+            @NotNull Model model,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "20") Integer pageSize,
+            @RequestParam(defaultValue = "serviceId") String sortBy
+    ) {
+        model.addAttribute("services", servicesService.getAllServices());
+        model.addAttribute("currentPage", pageNo);
+        return "admin/service";
+    }
 
+    @GetMapping("/addService")
+    public String addServiceForm(Model model) {
+        model.addAttribute("service", new Service());
+        return "admin/addService";
+    }
+
+    @PostMapping("/addService")
+    public String addService(
+            @Valid @ModelAttribute("service") Service service,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "admin/addService";
+        }
+        servicesService.saveService(service);
+        redirectAttributes.addFlashAttribute("message", "Service added successfully!");
+        return "redirect:/admin/services";
+    }
+
+    @GetMapping("/editService/{serviceId}")
+    public String editServiceForm(@PathVariable Long serviceId, Model model) {
+        var service = servicesService.getServiceById(serviceId)
+                .orElseThrow(() -> new IllegalArgumentException("Service not found"));
+        model.addAttribute("service", service);
+        return "admin/editService";
+    }
+
+    @PostMapping("/editService")
+    public String editService(
+            @Valid @ModelAttribute("service") Service service,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+    ) {
+        if (bindingResult.hasErrors()) {
+            return "admin/editService";
+        }
+        servicesService.updateService(service);
+        redirectAttributes.addFlashAttribute("message", "Service updated successfully!");
+        return "redirect:/admin/services";
+    }
+
+    @PostMapping("/deleteService/{serviceId}")
+    public String deleteService(@PathVariable Long serviceId, RedirectAttributes redirectAttributes) {
+        servicesService.deleteService(serviceId);
+        redirectAttributes.addFlashAttribute("message", "Service deleted successfully!");
+        return "redirect:/admin/services";
+    }
 }

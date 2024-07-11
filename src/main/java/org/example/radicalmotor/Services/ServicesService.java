@@ -1,6 +1,7 @@
 package org.example.radicalmotor.Services;
 
 import org.example.radicalmotor.Entities.Appointment;
+import org.example.radicalmotor.Entities.Vehicle;
 import org.example.radicalmotor.Repositories.AppointmentRepository;
 import org.example.radicalmotor.Repositories.IServiceRepository;
 import org.example.radicalmotor.Repositories.ServiceRepository;
@@ -12,7 +13,6 @@ import java.util.Optional;
 
 @org.springframework.stereotype.Service
 public class ServicesService implements IServiceRepository {
-
     @Autowired
     private ServiceRepository serviceRepository;
 
@@ -40,7 +40,16 @@ public class ServicesService implements IServiceRepository {
 
     @Override
     public void updateService(Service service) {
-        serviceRepository.save(service);
+        Service existingService = serviceRepository.findById(service.getServiceId()).orElse(null);
+        if (existingService != null) {
+            existingService.setServiceName(service.getServiceName());
+            existingService.setServiceDescription(service.getServiceDescription());
+            serviceRepository.save(existingService);
+        }
+    }
+
+    public Service saveService(Service service) {
+        return serviceRepository.save(service);
     }
 
     @Override
@@ -52,5 +61,4 @@ public class ServicesService implements IServiceRepository {
     public void saveAppointment(Appointment appointment) {
         appointmentRepository.save(appointment);
     }
-
 }
