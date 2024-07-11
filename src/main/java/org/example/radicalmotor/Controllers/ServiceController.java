@@ -60,4 +60,6 @@ public class ServiceController {
         serviceService.saveAppointment(appointment);
         return "Service/index";
     }
+
+
 }
