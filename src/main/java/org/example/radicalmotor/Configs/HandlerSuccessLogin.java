@@ -49,24 +49,43 @@ public class HandlerSuccessLogin extends SimpleUrlAuthenticationSuccessHandler {
         }
     }
 
-    public void handleOAuth2Success(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        OAuth2AuthenticationToken authToken = (OAuth2AuthenticationToken) authentication;
-        String email = authToken.getPrincipal().getAttribute("email");
-        String name = authToken.getPrincipal().getAttribute("name");
+    private void handleOAuth2Success(HttpServletRequest request, HttpServletResponse response, OAuth2AuthenticationToken authentication) throws IOException, ServletException {
+        String email = authentication.getPrincipal().getAttribute("email");
 
-        OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
-                authToken.getAuthorizedClientRegistrationId(), authToken.getName());
+        Optional<User> optionalUser = userService.getUserByEmail(email);
 
-        if (authorizedClient != null) {
-            OAuth2UserRequest userRequest = new OAuth2UserRequest(
-                    authorizedClient.getClientRegistration(),
-                    authorizedClient.getAccessToken(),
-                    authToken.getPrincipal().getAttributes()
-            );
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
 
-            OAuth2UserService.loadUser(userRequest);
+            if (!user.isAccountNonLocked()) {
+                request.getSession().setAttribute("errorMessage", "Your account is locked. You have to wait 15 minutes");
+                response.sendRedirect("/auth/login?error=true");
+                return;
+            }
+
+            if (user.getLockExpired() != null) {
+                if (user.getLockExpired().getTime() < System.currentTimeMillis()) {
+                    userService.resetLoginFail(user);
+                }
+            } else {
+                userService.resetLoginFail(user);
+            }
+
+            UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
+            UsernamePasswordAuthenticationToken newAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+            SecurityContextHolder.getContext().setAuthentication(newAuth);
+
+            boolean isAdmin = userDetails.getAuthorities().contains(new SimpleGrantedAuthority(String.valueOf(RoleType.ADMIN)));
+
+            if (isAdmin) {
+                setDefaultTargetUrl("/admin");
+            } else {
+                setDefaultTargetUrl("/");
+            }
         } else {
-            logger.error("OAuth2AuthorizedClient is null");
+            logger.error("User not found with email: " + email);
+            setDefaultTargetUrl("/auth/login?error=true");
         }
 
         super.onAuthenticationSuccess(request, response, authentication);

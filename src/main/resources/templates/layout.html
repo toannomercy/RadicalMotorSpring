@@ -55,11 +55,10 @@
                 <div class="nav-item dropdown">
                     <a href="/services" class="nav-item nav-link" sec:authorize="hasAnyAuthority('ADMIN','USER')">Services</a>
                 </div>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="btn btn-primary py-4 px-lg-5 d-lg-block" id="logout-btn-gradient"
-                            sec:authorize="isAuthenticated()">
+                <form id="logoutForm" th:action="@{/logout}" method="post">
+                    <a href="#" class="btn btn-primary py-4 px-lg-5 d-lg-block" id="logout-btn-gradient" sec:authorize="isAuthenticated()" onclick="submitLogoutForm(event)">
                         <i class="fa fa-sign-out-alt"></i> Logout
-                    </button>
+                    </a>
                 </form>
                 <a class="btn btn-primary py-4 px-lg-5 d-lg-block" id="signin-btn-gradient"
                    sec:authorize="!isAuthenticated()"
@@ -179,6 +178,12 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <!-- AOS JS -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        function submitLogoutForm(event) {
+            event.preventDefault();
+            document.getElementById('logoutForm').submit();
+        }
+    </script>
 </div>
 </body>
 </html>

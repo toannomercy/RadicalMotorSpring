@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
 <head th:fragment="css">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -296,8 +296,8 @@
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <form th:action="@{/logout}" method="post">
-                    <button type="submit" class="btn btn-primary">Logout
+                <form th:action="@{/logout}" method="post" >
+                    <button type="submit" class="btn btn-primary" sec:authorize="isAuthenticated()">Logout
                     </button>
                 </form>
             </div>
