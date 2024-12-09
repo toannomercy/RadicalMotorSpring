@@ -24,7 +24,7 @@ public class Supplier {
     private String supplierAddress;
     @Column(name = "supplierPhone", nullable = false)
     private String supplierPhone;
-    @Column(name = "supplierEmail",nullable = false)
+    @Column(name = "supplierEmail", nullable = false)
     private String supplierEmail;
     @Column(name = "isDeleted")
     private Boolean isDeleted;
